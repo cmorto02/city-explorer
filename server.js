@@ -67,6 +67,5 @@ function Weather(day){
 }
 
 app.use('*', (err, res) => handleError(err, res));
-// app.use('*', (request, response) => response.send(`Sorry, that route does not exist`));
 
 app.listen(PORT, () => console.log(`App is up on ${PORT}`));
