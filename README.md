@@ -12,7 +12,7 @@ Actual time needed to complete: _____
 
 # City Explorer
 
-**Author**: Christopher Morton/Alexander White
+**Author**: Christopher Morton
 **Version**: 1.0.0 (increment the patch/fix version number if you make more commits past your first submission)
 
 ## Overview
@@ -30,5 +30,6 @@ Actual time needed to complete: _____
 01-01-2001 4:59pm - Application now has a fully-functional express server, with a GET route for the location resource.
 
 ## Credits and Collaborations
-<!-- Give credit (and a link) to other people or resources that helped you build this application. -->
+Alexander White
+Aaron Ferris
 -->
