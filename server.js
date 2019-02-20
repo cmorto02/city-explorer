@@ -55,9 +55,9 @@ function getWeather(){
 //location constructor
 function Location(query, res) {
   this.search_query = query;
-  this.formatted_query = res.results[0].formatted_address;
-  this.latitude = res.results[0].geometry.location.lat;
-  this.longitude = res.results[0].geometry.location.lng;
+  this.formatted_query = res.body.results[0].formatted_address;
+  this.latitude = res.body.results[0].geometry.location.lat;
+  this.longitude = res.body.results[0].geometry.location.lng;
 }
 
 //forecast constructor
