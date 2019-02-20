@@ -1,13 +1,11 @@
 'use strict';
 
-// Require depenancies used
 require('dotenv').config();
 
 const express = require('express');
 const cors = require('cors');
 const superagent = require('superagent');
 
-//Setting port and assigning varibale for express.
 const PORT = process.env.PORT || 3000;
 const app = express();
 app.use(cors());
@@ -34,7 +32,6 @@ function handleError(err, res){
 //search lat long funciton
 function searchToLatLong(query){
   const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${query}&key=${process.env.GEOCODE_API_KEY}`;
-
   return superagent.get(url)
     .then(res=>{
       return new Location(query, res);
@@ -58,9 +55,9 @@ function getWeather(request, response){
 //location constructor
 function Location(query, res) {
   this.search_query = query;
-  this.formatted_query = res.body.results[0].formatted_address;
-  this.latitude = res.body.results[0].geometry.location.lat;
-  this.longitude = res.body.results[0].geometry.location.lng;
+  this.formatted_query = res.results[0].formatted_address;
+  this.latitude = res.results[0].geometry.location.lat;
+  this.longitude = res.results[0].geometry.location.lng;
 }
 
 //forecast constructor
@@ -70,5 +67,6 @@ function Weather(day){
 }
 
 app.use('*', (err, res) => handleError(err, res));
+// app.use('*', (request, response) => response.send(`Sorry, that route does not exist`));
 
 app.listen(PORT, () => console.log(`App is up on ${PORT}`));
