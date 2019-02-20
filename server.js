@@ -3,20 +3,19 @@
 require('dotenv').config();
 
 const express = require('express');
+const cors = require('cors');
+const superagent = require('superagent');
 
 const PORT = process.env.PORT || 3000;
 const app = express();
-const cors = require('cors');
-var latitude = Location.latitude;
-var longitude = Location.longitude;
 app.use(cors());
-
 
 //route to location
 app.get('/location', (request, response) => {
-  const locationData = searchToLatLong(request.query.data);
-  response.send(locationData);
-});
+  searchToLatLong(request.query.data)
+    .then(location => response.send(location))
+    .catch(error => handleError(error, response));
+})
 
 //route to weather
 app.get('/weather', (request, response) => {
@@ -32,15 +31,18 @@ function handleError(err, res){
 
 //search lat long funciton
 function searchToLatLong(query){
-  const geoData = require('./data/geo.json');
-  const location = new Location(query, geoData);
-  console.log('Location in searchToLatLong()', location);
-  return location;
+  const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${query}&key=${process.env.GEOCODE_API_KEY}`;
+  return superagent.get(url)
+    .then(res=>{
+      return new Location(query, res);
+    })
+    .catch(error => handleError);
 }
 
 //search to weatherdata
 function getWeather(){
-  const darkSkyData = require(`https://api.darksky.net/forecast/5c5258410251eec03fe828c0f7d38cb7/${latitude},${longitude}`);
+  const darkskyData = require('./data/darksky.json');
+  // const url = `https://api.darksky.net/forecast/${process.env.DARKSKY_API_KEY}/${latitude},${longitude}`;
   let weatherSummaries = [];
   darkSkyData.daily.data.forEach(day=>{
     weatherSummaries.push(new Weather(day));
@@ -50,7 +52,6 @@ function getWeather(){
 
 //location constructor
 function Location(query, res) {
-  console.log('res in Location()', res);
   this.search_query = query;
   this.formatted_query = res.results[0].formatted_address;
   this.latitude = res.results[0].geometry.location.lat;
