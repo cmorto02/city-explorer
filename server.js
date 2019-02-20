@@ -20,10 +20,10 @@ app.get('/location', (request, response) => {
 })
 
 //route to weather
-app.get('/weather', (request, response) => {
-  const weatherData = getWeather(request.query.data);
-  response.send(weatherData);
-});
+app.get('/weather', getWeather);
+
+//route to meetup
+app.get('/meetup', getMeetup)
 
 //Errror handler
 function handleError(err, res){
@@ -34,7 +34,6 @@ function handleError(err, res){
 //search lat long funciton
 function searchToLatLong(query){
   const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${query}&key=${process.env.GEOCODE_API_KEY}`;
-
   return superagent.get(url)
     .then(res=>{
       return new Location(query, res);
@@ -45,12 +44,27 @@ function searchToLatLong(query){
 //Weather route handler
 function getWeather(request, response){
   const url = `https://api.darksky.net/forecast/${process.env.DARKSKY_API_KEY}/${request.query.data.latitude},${request.query.data.longitude}`;
+  
   superagent.get(url)
     .then(result=>{
       const weatherSummaries = result.body.daily.data.map(day=>{
         return new Weather(day);
       });
       response.send(weatherSummaries);
+    })
+    .catch(error=>handleError(error, response));
+}
+
+//Meetup route handler 
+function getMeetup(request, response){
+  const url=`https://api.meetup.com/find/events?&sign=true&photo-host=public&${request.query.data.longitude}&radius=10&fields=20&${request.query.data.latitude}&key=${process.env.MEETUP_API_KEY}`;
+  console.log(url)
+  superagent.get(url)
+    .then(result=>{
+      const meetupSummaries = result.body.data.map(day=>{
+        return new Meetup(day);
+      });
+      response.send(meetupSummaries);
     })
     .catch(error=>handleError(error, response));
 }
@@ -67,6 +81,14 @@ function Location(query, res) {
 function Weather(day){
   this.forecast = day.summary;
   this.time = new Date(day.time*1000).toString().slice(0,15);
+}
+
+//meetup constructor
+function Meetup(day){
+  this.link = day.link;
+  this.name = day.title;
+  this.creation_date = new Date(day.created*1000).toString().slice(0,15);;
+  this.host = day.organizer.name;
 }
 
 app.use('*', (err, res) => handleError(err, res));
