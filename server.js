@@ -34,6 +34,7 @@ function handleError(err, res){
 //search lat long funciton
 function searchToLatLong(query){
   const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${query}&key=${process.env.GEOCODE_API_KEY}`;
+
   return superagent.get(url)
     .then(res=>{
       return new Location(query, res);
@@ -42,14 +43,26 @@ function searchToLatLong(query){
 }
 
 //search to weatherdata
-function getWeather(){
+// function getWeather(){
+//   const darkskyData = require('./data/darksky.json');
+//   // const url = `https://api.darksky.net/forecast/${process.env.DARKSKY_API_KEY}/${latitude},${longitude}`;
+//   let weatherSummaries = [];
+//   darkSkyData.daily.data.forEach(day=>{
+//     weatherSummaries.push(new Weather(day));
+//   });
+//   return weatherSummaries
+// }
+
+function getWeather() {
   const darkskyData = require('./data/darksky.json');
-  // const url = `https://api.darksky.net/forecast/${process.env.DARKSKY_API_KEY}/${latitude},${longitude}`;
-  let weatherSummaries = [];
-  darkSkyData.daily.data.forEach(day=>{
+
+  const weatherSummaries = [];
+
+  darkskyData.daily.data.forEach(day => {
     weatherSummaries.push(new Weather(day));
   });
-  return weatherSummaries
+
+  return weatherSummaries;
 }
 
 //location constructor
