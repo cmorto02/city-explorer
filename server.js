@@ -7,6 +7,7 @@ const express = require('express');
 const cors = require('cors');
 const superagent = require('superagent');
 
+//Setting port and assigning varibale for express.
 const PORT = process.env.PORT || 3000;
 const app = express();
 app.use(cors());
