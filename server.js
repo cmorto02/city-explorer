@@ -1,11 +1,13 @@
 'use strict';
 
+// Require depenancies used
 require('dotenv').config();
 
 const express = require('express');
 const cors = require('cors');
 const superagent = require('superagent');
 
+//Setting port and assigning varibale for express.
 const PORT = process.env.PORT || 3000;
 const app = express();
 app.use(cors());
@@ -65,6 +67,5 @@ function Weather(day){
 }
 
 app.use('*', (err, res) => handleError(err, res));
-// app.use('*', (request, response) => response.send(`Sorry, that route does not exist`));
 
 app.listen(PORT, () => console.log(`App is up on ${PORT}`));

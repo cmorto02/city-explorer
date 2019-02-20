@@ -10,6 +10,16 @@ Finish time: _____
 
 Actual time needed to complete: _____
 
+## Feature 1: Data Format
+
+Estimate of time needed to complete: _____
+
+Start time: _____
+
+Finish time: _____
+
+Actual time needed to complete: _____
+
 # City Explorer
 
 **Author**: Christopher Morton
