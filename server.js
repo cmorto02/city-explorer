@@ -39,15 +39,17 @@ function searchToLatLong(query){
     .catch(error => handleError);
 }
 
-//search to weatherdata
-function getWeather(){
-  const darkskyData = require('./data/darksky.json');
-  // const url = `https://api.darksky.net/forecast/${process.env.DARKSKY_API_KEY}/${latitude},${longitude}`;
-  let weatherSummaries = [];
-  darkSkyData.daily.data.forEach(day=>{
-    weatherSummaries.push(new Weather(day));
-  });
-  return weatherSummaries
+//Weather route handler
+function getWeather(request, response){
+  const url = `https://api.darksky.net/forecast/${process.env.DARKSKY_API_KEY}/${request.query.data.latitude},${request.query.data.longitude}`;
+  superagent.get(url)
+    .then(result=>{
+      const weatherSummaries = result.body.daily.data.map(day=>{
+        return new Weather(day);
+      });
+      response.send(weatherSummaries);
+    })
+    .catch(error=>handleError(error, response));
 }
 
 //location constructor
