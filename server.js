@@ -28,7 +28,7 @@ app.get('/meetups', getMeetup);
 //Error handler
 function handleError(err, res){
   console.error(err);
-  if (res) res.status(500).send('');
+  if (res) res.status(500).send('Well, thats not working.');
 }
 
 //search lat long funciton
@@ -38,13 +38,12 @@ function searchToLatLong(query){
     .then(res=>{
       return new Location(query, res);
     })
-    .catch(error => handleError);
+    .catch(error => handleError(error));
 }
 
 //Weather route handler
 function getWeather(request, response){
   const url = `https://api.darksky.net/forecast/${process.env.DARKSKY_API_KEY}/${request.query.data.latitude},${request.query.data.longitude}`;
-  console.log('In get weather function')
   return superagent.get(url)
     .then(result=>{
       const weatherSummaries = result.body.daily.data.map(day=>{
@@ -56,18 +55,17 @@ function getWeather(request, response){
 }
 
 //Meetup route handler 
-function getMeetup(request, response){
-  const url=`https://api.meetup.com/find/upcoming_events?&sign=true&photo-host=public&lon=${request.query.data.longitude}&page=20&radius=10&lat=${request.query.data.latitude}&key=${process.env.MEETUPS_API_KEY}`;
+function getMeetup(request, response) {
+  const url = `https://api.meetup.com/find/upcoming_events?&sign=true&photo-host=public&lon=${request.query.data.longitude}&page=20&lat=${request.query.data.latitude}&key=${process.env.MEETUPS_API_KEY}`;
 
-  console.log('In getMeetup function')
-  return superagent.get(url)
-    .then(result=>{
-      const meetupSummaries = result.body.events.map(event=>{
-        return new Meetup(event)
+  superagent.get(url)
+    .then(result => {
+      const meetups = result.body.events.map(meetup => {
+        return new Meetup(meetup)
       });
-      response.send(meetupSummaries);
+      response.send(meetups);
     })
-    .catch(error=>handleError(error, response));
+    .catch(error => handleError(error, response));
 }
 
 //location constructor
@@ -90,7 +88,6 @@ function Meetup(event){
   this.name = event.group.name;
   this.creation_date = new Date(event.created*1000).toString().slice(0,15);;
   this.host = event.group.who;
-  this.create_at = Date.now();
 }
 
 app.use('*', (err, res) => handleError(err, res));

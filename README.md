@@ -1,43 +1,62 @@
-# 301d44-lab6
 
-Number and name of feature: ________________________________
 
-Estimate of time needed to complete: _____
+Number and name of feature: Maps API : 
 
-Start time: _____
+Estimate of time needed to complete: 1hr
 
-Finish time: _____
+Start time: ??
 
-Actual time needed to complete: _____
+Finish time: ??
 
-## Feature 1: Data Format
+Actual time needed to complete: 4hrs
+we had the wrong API key
 
-Estimate of time needed to complete: _____
 
-Start time: _____
+Estimate of time needed to complete: Weather API
 
-Finish time: _____
+Estimate of time needed to complete: 1hr
 
-Actual time needed to complete: _____
+Start time: ??
+
+Finish time: ??
+
+Actual time needed to complete: 1hr
+
+
+Estimate of time needed to complete: Meetups API API
+
+Estimate of time needed to complete: 1hr
+
+Start time: ??
+
+Finish time: 1255pm March 3 2019
+
+Actual time needed to complete: 3hrs
+
 
 # City Explorer
 
 **Author**: Christopher Morton
-**Version**: 1.0.0 (increment the patch/fix version number if you make more commits past your first submission)
+**Version**: 1.2.0 
 
 ## Overview
-<!-- Provide a high level overview of what this application is and why you are building it, beyond the fact that it's an assignment for this class. (i.e. What's your problem domain?) -->
+This applications provides requested location data, to include : a map, meetups, and weather at the current iteration
 
 ## Getting Started
-<!-- What are the steps that a user must take in order to build this app on their own machine and get it running? -->
+You must set up the front end, and back in to be able to take in and use data from multiple APIs. At the current time we are not required to cache data, so we have no need of an SQL server.
 
 ## Architecture
-<!-- Provide a detailed description of the application design. What technologies (languages, libraries, etc) you're using, and any other relevant design information. -->
+We are using the darksky API
+google maps API
+Meetups API
+Superagent
+CORS
+Express
 
 ## Change Log
-<!-- Use this area to document the iterative changes made to your application as each feature is successfully implemented. Use time stamps. Here's an examples:
-
-01-01-2001 4:59pm - Application now has a fully-functional express server, with a GET route for the location resource.
+1.0.0 : The google maps API is sending back location data
+1.1.0 : Using the location data from the google maps API we are pulling in location weather data
+1.2.0  : Using the google maps API data we are pulling in information about meetups in the location searched.
 
 ## Credits and Collaborations
 Alexander White
