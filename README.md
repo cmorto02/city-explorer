@@ -1,3 +1,39 @@
+
+
+Number and name of feature: Maps API : 
+
+Estimate of time needed to complete: 1hr
+
+Start time: ??
+
+Finish time: ??
+
+Actual time needed to complete: 4hrs
+we had the wrong API key
+
+
+Estimate of time needed to complete: Weather API
+
+Estimate of time needed to complete: 1hr
+
+Start time: ??
+
+Finish time: ??
+
+Actual time needed to complete: 1hr
+
+
+Estimate of time needed to complete: Meetups API API
+
+Estimate of time needed to complete: 1hr
+
+Start time: ??
+
+Finish time: 1255pm March 3 2019
+
+Actual time needed to complete: 3hrs
+
+
 # City Explorer
 
 **Author**: Christopher Morton
