@@ -28,7 +28,7 @@ app.get('/meetups', getMeetup);
 //Error handler
 function handleError(err, res){
   console.error(err);
-  if (res) res.status(500).send('Piss Off');
+  if (res) res.status(500).send('');
 }
 
 //search lat long funciton
@@ -57,7 +57,7 @@ function getWeather(request, response){
 
 //Meetup route handler 
 function getMeetup(request, response){
-  const url=`https://api.meetup.com/find/upcoming_events?&sign=true&photo-host=public&lon=${request.query.data.longitude}&page=20&radius=10&lat=${request.query.data.latitude}&key=${process.env.MEETUP_API_KEY}`;
+  const url=`https://api.meetup.com/find/upcoming_events?&sign=true&photo-host=public&lon=${request.query.data.longitude}&page=20&radius=10&lat=${request.query.data.latitude}&key=${process.env.MEETUPS_API_KEY}`;
 
   console.log('In getMeetup function')
   return superagent.get(url)
